@@ -1,0 +1,31 @@
+{
+  "name": "projekt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petercvek/fri-tehnicne-vescine.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/petercvek/fri-tehnicne-vescine/issues"
+  },
+  "homepage": "https://github.com/petercvek/fri-tehnicne-vescine#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.5.6",
+    "graphql-iso-date": "^3.6.1",
+    "pg": "^7.12.1"
+  }
+}

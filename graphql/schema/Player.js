@@ -11,6 +11,9 @@ const Player = new GraphQLObjectType({
     },
     quiz: {
       type: GraphQLInt
+    },
+    start: {
+      type: GraphQLString
     }
   }
 });
@@ -18,7 +21,7 @@ const Player = new GraphQLObjectType({
 const createPlayer = async (quizCode, name) => {
   const result = await global.pg.query(
     `
-    SELECT id
+    SELECT id, start
     FROM quiz
     WHERE code = $1
   `,
@@ -30,16 +33,21 @@ const createPlayer = async (quizCode, name) => {
       `
         INSERT INTO player (name, quiz)
         VALUES ($1, $2)
-      RETURNING *
+        RETURNING *
         
       `,
       [name, result.rows[0].id]
     );
     console.log(result2.rows[0]);
 
-    return result2.rows[0];
+    return {
+      id: result2.rows[0].id,
+      name: result2.rows[0].name,
+      quiz: result2.rows[0].quiz,
+      start: result.rows[0].start
+    };
   } else {
-    return false;
+    return null;
   }
 };
 

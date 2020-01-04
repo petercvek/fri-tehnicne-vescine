@@ -28,7 +28,7 @@ const submitAnswer = async (quizId, playerId, question, points) => {
       VALUES ($1, $2, $3, $4)
       RETURNING *
       `,
-    [quizId, playerId, question, points]
+    [playerId, quizId, question, points]
   );
 
   return result.rows[0];

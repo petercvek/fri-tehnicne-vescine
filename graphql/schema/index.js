@@ -3,6 +3,8 @@ const { GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt
 const { Quiz, getQuizById } = require("./Quiz");
 const { Player, createPlayer } = require("./Player");
 const { Question, getQuestions } = require("./Question");
+const { Answer, submitAnswer } = require("./Answer");
+const { Result, getResults } = require("./Result");
 
 const Query = new GraphQLObjectType({
   name: "Query",
@@ -24,6 +26,15 @@ const Query = new GraphQLObjectType({
         }
       },
       resolve: (parent, args) => getQuestions(args.quizId)
+    },
+    results: {
+      type: new GraphQLList(Result),
+      args: {
+        quizId: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (parent, args) => getResults(args.quizId)
     }
   }
 });
@@ -32,7 +43,7 @@ const Mutation = new GraphQLObjectType({
   name: "Mutatuion",
   fields: {
     submitAnswer: {
-      type: GraphQLInt,
+      type: Answer,
       args: {
         quizId: {
           type: GraphQLInt
@@ -40,10 +51,14 @@ const Mutation = new GraphQLObjectType({
         playerId: {
           type: GraphQLInt
         },
-        time: {
-          type: GraphQLString
+        question: {
+          type: GraphQLInt
+        },
+        points: {
+          type: GraphQLInt
         }
-      }
+      },
+      resolve: (parent, args) => submitAnswer(args.quizId, args.playerId, args.question, args.points)
     },
     createPlayer: {
       type: Player,
